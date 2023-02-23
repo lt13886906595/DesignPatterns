@@ -16,8 +16,19 @@ public class TestController2 {
     @Autowired
     private TestService testService;
 
+    /**
+     * for循环存在多线程并发问题
+     * @return
+     * @throws InterruptedException
+     */
     @RequestMapping("/test1")
-    public String test() throws InterruptedException {
-        return testService.query();
+    public  String test() {
+            synchronized (TestController2.class){
+                for (int i=0;i<10;i++){
+                    System.out.println(Thread.currentThread().getName()+"--"+i);
+                }
+            }
+        //return testService.query();
+        return null;
     }
 }
